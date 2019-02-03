@@ -41,8 +41,14 @@ defaults
 {% endif %}
 
 frontend {{ haproxy_frontend_name }}
-    bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_port }}
+{% for binding in haproxy_frontend_bindings %}
+    bind {{ binding }}
+{% endfor %}
     mode {{ haproxy_frontend_mode }}
+{% for option in haproxy_frontend_options %}
+    option {{ option }}
+{% endfor %}
+    timeout client {{ haproxy_frontend_timeout_client }}
     default_backend {{ haproxy_backend_name }}
 
 backend {{ haproxy_backend_name }}
