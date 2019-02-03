@@ -58,7 +58,10 @@ backend {{ haproxy_backend_name }}
 {% if haproxy_backend_httpchk != '' %}
     option httpchk {{ haproxy_backend_httpchk }}
 {% endif %}
-    cookie SERVERID insert indirect
+    timeout connect {{haproxy_backend_timeout_connect}}
+{% if haproxy_backend_cookie != '' % }
+    cookie {{ haproxy_backend_cookie }}
+{% endif %}
 {% for backend in haproxy_backend_servers %}
-    server {{ backend.name }} {{ backend.address }} cookie {{ backend.name }} check
+    server {{ backend.name }} {{ backend.address }} {% if haproxy_backend_cookie != '' %}cookie {{ backend.name }}{% endif %} check
 {% endfor %}
