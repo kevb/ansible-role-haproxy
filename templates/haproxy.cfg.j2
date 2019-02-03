@@ -15,10 +15,12 @@ global
 {% endfor %}
 
 defaults
-  log global
-  mode  http
-  option  httplog
-  option  dontlognull
+  log {{ haproxy_defaults_log }}
+  mode  {{ haproxy_defaults_mode }}
+{% for option in haproxy_defaults_options %}
+  option  {{ option }}
+{% endfor %}
+
 {% if haproxy_version == '1.4' %}
         contimeout 5000
         clitimeout 50000
