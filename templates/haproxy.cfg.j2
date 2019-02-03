@@ -58,8 +58,8 @@ backend {{ haproxy_backend_name }}
 {% if haproxy_backend_httpchk != '' %}
     option httpchk {{ haproxy_backend_httpchk }}
 {% endif %}
-    timeout connect {{haproxy_backend_timeout_connect}}
-{% if haproxy_backend_cookie != '' % }
+    timeout connect {{ haproxy_backend_timeout_connect }}
+{% if haproxy_backend_cookie != '' %}
     cookie {{ haproxy_backend_cookie }}
 {% endif %}
 {% for backend in haproxy_backend_servers %}
